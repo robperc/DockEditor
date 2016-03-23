@@ -33,6 +33,11 @@ class Dock(object):
 		else:
 			add_path = add_path[0]
 
+		if index == -1 or index > len(self.apps):
+			index = len(self.apps)
+		elif index < -1:
+			index = 0
+
 		new_item = {
 			'GUID': str(uuid.uuid4()).upper(), 
 			'tile-data': {
@@ -40,13 +45,13 @@ class Dock(object):
 					'_CFURLString': add_path, 
 					'_CFURLStringType': 0
 				},
-				'file-label': app_name, 
+				'file-label': app_name,
 				'file-type': 32
 			}, 
 			'tile-type': 'file-tile'
 		}
-		self.apps.append(new_item)
-		self.labels.append(label)
+		self.apps.insert(index, new_item)
+		self.labels.append(app_name)
 
 	def remove(self, label):
 		for dock_item in reversed(self.apps):
