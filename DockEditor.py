@@ -35,7 +35,7 @@ class Dock(object):
 				print "item %s already found" % (add_name)
 				return False
 
-		label_name = add_name.split(".app")[0]
+		label = add_name.split(".app")[0]
 
 		new_item = {
 			'GUID': str(uuid.uuid4()).upper(), 
@@ -44,7 +44,7 @@ class Dock(object):
 					'_CFURLString': add_path, 
 					'_CFURLStringType': 0
 				},
-				'file-label': label_name, 
+				'file-label': label, 
 				'file-type': 32
 			}, 
 			'tile-type': 'file-tile'
