@@ -31,9 +31,11 @@ class Dock(object):
 			add_path = add_path[0]
 		self.add(label, add_path, index=index, section=section)
 
-	def addFile(self, label, uri, index=-1, section="apps"):
+	def addFile(self, uri, label=None, index=-1, section="apps"):
 		if not os.path.isfile(uri):
 			return
+		if label == None:
+			label = os.path.basename(uri)
 		self.add(label, uri, index=index, section=section)
 
 	def add(self, label, uri, index=-1, section="apps", tile_type="file-tile"):
@@ -57,7 +59,7 @@ class Dock(object):
 			index = 0
 
 		new_item = {
-			'GUID': str(uuid.uuid4()).upper(), 
+			'GUID': str(uuid.uuid4()).upper(),
 			'tile-type': tile_type
 		}
 
