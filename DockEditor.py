@@ -52,16 +52,16 @@ class Dock(object):
 		self.apps.append(new_item)
 		return True
 
-	def remove(self, item_name):
+	def remove(self, label):
 		for dock_item in reversed(self.apps):
-			if dock_item['tile-data'].get('file-label') == item_name:
+			if dock_item['tile-data'].get('file-label') == label:
 				self.apps.remove(dock_item)
 				return
 
-	def move(self, item_name, index):
+	def move(self, label, index):
 		pass
 
-	def swap(self, item_name1, item_name2):
+	def swap(self, label1, label2):
 		pass
 
 	def write(self):
