@@ -55,6 +55,7 @@ class Dock(object):
 	def remove(self, label):
 		for dock_item in reversed(self.apps):
 			if dock_item['tile-data'].get('file-label') == label:
+				self.labels.remove(label)
 				self.apps.remove(dock_item)
 				return
 
