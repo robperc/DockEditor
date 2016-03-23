@@ -24,17 +24,14 @@ class Dock(object):
 		try_paths = [path + app_name + '.app' for path in self.app_dirs]
 		add_path = [path for path in try_paths if os.path.exists(path)]
 
+		if app_name in self.labels:
+			return
+
 		if not add_path:
 			print "Can't find app: %s" % (app_name)
 			return
 		else:
 			add_path = add_path[0]
-
-		# if item already in dock do not add
-		for dock_item in self.apps:
-			if dock_item['tile-data'].get('file-label') == app_name:
-				print "item %s already found" % (app_name)
-				return
 
 		new_item = {
 			'GUID': str(uuid.uuid4()).upper(), 
