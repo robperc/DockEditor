@@ -25,7 +25,7 @@ class Dock(object):
 
 		if not add_path:
 			print "Can't find app: %s" % (add_name)
-			return False
+			return
 		else:
 			add_path = add_path[0]
 
@@ -33,7 +33,7 @@ class Dock(object):
 		for dock_item in self.apps:
 			if dock_item['tile-data'].get('file-label') == add_name:
 				print "item %s already found" % (add_name)
-				return False
+				return
 
 		label = add_name.split(".app")[0]
 
@@ -51,7 +51,6 @@ class Dock(object):
 		}
 		self.apps.append(new_item)
 		self.labels.append(label)
-		return True
 
 	def remove(self, label):
 		for dock_item in reversed(self.apps):
