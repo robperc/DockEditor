@@ -38,6 +38,13 @@ class Dock(object):
 			label = os.path.basename(uri)
 		self.add(label, uri, index=index, section=section)
 
+	def addDir(self, uri, label=None, index=-1, section="apps"):
+		if not os.path.isdir(uri):
+			return
+		if label == None:
+			label = os.path.basename(uri)
+		self.add(label, uri, index=index, section=section, tile_type="directory-tile")
+
 	def add(self, label, uri, index=-1, section="apps", tile_type="file-tile"):
 
 		if section == "apps":
