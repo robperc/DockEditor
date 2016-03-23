@@ -19,23 +19,22 @@ class Dock(object):
 		self.others      = NSMutableArray.alloc().initWithArray_(CoreFoundation.CFPreferencesCopyAppValue("persistent-others", self.id))
 		self.labels      = [dock_item['tile-data'].get('file-label') for dock_item in (self.apps + self.others) if dock_item['tile-data'].get('file-label') is not None]
 
-	def addApp(self, add_name, index=-1):
-		try_paths = [path + add_name + '.app' for path in self.app_dirs]
+	def addApp(self, app_name, index=-1):
+		app_name = app_name.split(".app")[0]
+		try_paths = [path + app_name + '.app' for path in self.app_dirs]
 		add_path = [path for path in try_paths if os.path.exists(path)]
 
 		if not add_path:
-			print "Can't find app: %s" % (add_name)
+			print "Can't find app: %s" % (app_name)
 			return
 		else:
 			add_path = add_path[0]
 
 		# if item already in dock do not add
 		for dock_item in self.apps:
-			if dock_item['tile-data'].get('file-label') == add_name:
-				print "item %s already found" % (add_name)
+			if dock_item['tile-data'].get('file-label') == app_name:
+				print "item %s already found" % (app_name)
 				return
-
-		label = add_name.split(".app")[0]
 
 		new_item = {
 			'GUID': str(uuid.uuid4()).upper(), 
@@ -44,7 +43,7 @@ class Dock(object):
 					'_CFURLString': add_path, 
 					'_CFURLStringType': 0
 				},
-				'file-label': label, 
+				'file-label': app_name, 
 				'file-type': 32
 			}, 
 			'tile-type': 'file-tile'
