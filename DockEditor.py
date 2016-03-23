@@ -61,11 +61,12 @@ class Dock(object):
 		self.labels.append(app_name)
 
 	def remove(self, label):
-		for dock_item in reversed(self.apps):
-			if dock_item['tile-data'].get('file-label') == label:
-				self.labels.remove(label)
-				self.apps.remove(dock_item)
-				return
+		for target in (self.apps, self.others):
+			for dock_item in reversed(target):
+				if dock_item['tile-data'].get('file-label') == label:
+					self.labels.remove(label)
+					target.remove(dock_item)
+					return
 
 	def move(self, label, index):
 		pass
