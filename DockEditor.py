@@ -48,6 +48,9 @@ class Dock(object):
 		if label in self.labels:
 			return
 
+		if tile_type not in self.tiles:
+			return
+
 		if index == -1 or index > len(target):
 			index = len(target)
 		elif index < -1:
@@ -55,16 +58,31 @@ class Dock(object):
 
 		new_item = {
 			'GUID': str(uuid.uuid4()).upper(), 
-			'tile-data': {
+			'tile-type': tile_type
+		}
+
+		if tile_type in ('file-tile', 'directory-tile'):
+			if tile_type == 'file-tile':
+				file_type = 32
+			if tile_type == 'directory-tile':
+				file_type = 2
+			new_item['tile-data'] = {
 				'file-data': {
 					'_CFURLString': uri, 
 					'_CFURLStringType': 0
 				},
 				'file-label': label,
-				'file-type': 32
-			}, 
-			'tile-type': 'file-tile'
-		}
+				'file-type': file_type
+			}
+		else:
+			new_item['tile-data'] = {
+				'url': {
+					'_CFURLString': uri, 
+					'_CFURLStringType': 15
+				},
+				'label': label
+			}
+
 		target.insert(index, new_item)
 		self.labels.append(label)
 
