@@ -19,7 +19,7 @@ class Dock(object):
 		self.others      = NSMutableArray.alloc().initWithArray_(CoreFoundation.CFPreferencesCopyAppValue("persistent-others", self.id))
 		self.labels      = [dock_item['tile-data'].get('file-label') for dock_item in (self.apps + self.others) if dock_item['tile-data'].get('file-label') is not None]
 
-	def add(self, add_name, index=-1):
+	def addApp(self, add_name, index=-1):
 		try_paths = [path + add_name + '.app' for path in self.app_dirs]
 		add_path = [path for path in try_paths if os.path.exists(path)]
 
