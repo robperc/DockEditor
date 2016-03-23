@@ -14,7 +14,7 @@ class Dock(object):
 			'/System/Library/CoreServices/Applications/'
 		)
 		self.sections    = ('persistent-apps', 'persistent-others')
-		self.tiles       = ('file', 'directory', 'url')
+		self.tiles       = ('file-tile', 'directory-tile', 'url-tile')
 		self.id          = "com.apple.dock"
 		self.apps        = NSMutableArray.alloc().initWithArray_(CoreFoundation.CFPreferencesCopyAppValue("persistent-apps", self.id))
 		self.others      = NSMutableArray.alloc().initWithArray_(CoreFoundation.CFPreferencesCopyAppValue("persistent-others", self.id))
@@ -31,8 +31,12 @@ class Dock(object):
 			add_path = add_path[0]
 		self.add(label, add_path, index=index, section=section)
 
+	def addFile(self, label, uri, index=-1, section="apps"):
+		if not os.path.isfile(uri):
+			return
+		self.add(label, uri, index=index, section=section)
 
-	def add(self, label, uri, index=-1, section="apps", tile_type="file"):
+	def add(self, label, uri, index=-1, section="apps", tile_type="file-tile"):
 
 		if section == "apps":
 			target = self.apps
