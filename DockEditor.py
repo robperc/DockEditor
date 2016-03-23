@@ -50,6 +50,7 @@ class Dock(object):
 			'tile-type': 'file-tile'
 		}
 		self.apps.append(new_item)
+		self.labels.append(label)
 		return True
 
 	def remove(self, label):
