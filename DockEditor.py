@@ -14,6 +14,7 @@ class Dock(object):
 			'/System/Library/CoreServices/Applications/'
 		)
 		self.sections    = ('persistent-apps', 'persistent-others')
+		self.tiles       = ('file', 'directory', 'url')
 		self.id          = "com.apple.dock"
 		self.apps        = NSMutableArray.alloc().initWithArray_(CoreFoundation.CFPreferencesCopyAppValue("persistent-apps", self.id))
 		self.others      = NSMutableArray.alloc().initWithArray_(CoreFoundation.CFPreferencesCopyAppValue("persistent-others", self.id))
