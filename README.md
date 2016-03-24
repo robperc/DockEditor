@@ -20,4 +20,7 @@ dock.write()
 
 ## Notes
 
-- Currently only supports addition of "file-tile" type items to Apps portion (left side of | ) of Dock.
+- url-tile type Dock items only supported in the "persistent-others" section of Dock ( right side of | ).
+- Dock may need to be killed after modification for changes to appear. This can be scripted with the snippet below if needed.
+subprocess.check_call(["killall", "Dock"])
+```
