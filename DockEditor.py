@@ -18,7 +18,12 @@ class Dock(object):
 		self.id          = "com.apple.dock"
 		self.apps        = NSMutableArray.alloc().initWithArray_(CoreFoundation.CFPreferencesCopyAppValue("persistent-apps", self.id))
 		self.others      = NSMutableArray.alloc().initWithArray_(CoreFoundation.CFPreferencesCopyAppValue("persistent-others", self.id))
-		self.labels      = [dock_item['tile-data'].get('file-label') for dock_item in (self.apps + self.others) if dock_item['tile-data'].get('file-label') is not None]
+		self.labels      = self.getLabels()
+
+	def getLabels(self):
+		file_labels = [dock_item['tile-data']['file-label'] for dock_item in (self.apps + self.others) if dock_item['tile-data'].get('file-label') is not None]
+		url_labels  = [dock_item['tile-data']['label'] for dock_item in (self.apps + self.others) if dock_item['tile-data'].get('label') is not None]
+		return file_labels + url_labels
 
 	def addApp(self, label, index=-1, section="apps"):
 		label = label.split(".app")[0]
@@ -45,8 +50,8 @@ class Dock(object):
 			label = os.path.basename(uri)
 		self.add(label, uri, index=index, section=section, tile_type="directory-tile")
 
-	def addUrl(self, label, url, index=-1, section="apps"):
-		self.add(label, url, index=index, section=section, tile_type="url-tile")
+	def addUrl(self, label, url, index=-1):
+		self.add(label, url, index=index, tile_type="url-tile")
 
 	def add(self, label, uri, index=-1, section="apps", tile_type="file-tile"):
 
@@ -101,7 +106,7 @@ class Dock(object):
 	def remove(self, label):
 		for target in (self.apps, self.others):
 			for dock_item in reversed(target):
-				if dock_item['tile-data'].get('file-label') == label:
+				if dock_item['tile-data'].get('file-label') == label or dock_item['tile-data'].get('label'):
 					self.labels.remove(label)
 					target.remove(dock_item)
 					return
