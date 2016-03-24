@@ -111,6 +111,15 @@ class Dock(object):
 					target.remove(dock_item)
 					return
 
+	def removeAll(self, section="apps"):
+		if section == "apps":
+			target = self.apps
+		elif section == "others":
+			target = self.others
+		else:
+			return
+		target[:] = []
+
 	def move(self, label, index):
 		pass
 
