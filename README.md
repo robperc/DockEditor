@@ -16,6 +16,7 @@ dock.addDir("/Users/Shared", label="SharedDir")          # Add 'SharedDir' direc
 dock.addUrl("Reddit", "https://reddit.com", index=0)     # Add url item for 'Reddit' to Dock. url items can only be added to 'others' section.
 dock.remove("Calendar")                                  # Remove 'Calendar' application from Dock.
 dock.remove("Reddit")                                    # Remove 'Reddit' url item from Dock.
+
 dock.write()
 
 ```
