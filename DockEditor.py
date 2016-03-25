@@ -118,6 +118,13 @@ class Dock(object):
 			target = self.others
 		else:
 			return
+		for item in target:
+			info = item['tile-data']
+			try:
+				label = info['file-label'] if info.get('file-label') is not None else info['label']
+				self.labels.remove(label)
+			except:
+				pass
 		target[:] = []
 
 	def move(self, label, index):
