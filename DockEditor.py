@@ -51,7 +51,7 @@ class Dock(object):
 		self.add(label, uri, index=index, section=section, tile_type="directory-tile")
 
 	def addUrl(self, label, url, index=-1):
-		self.add(label, url, index=index, tile_type="url-tile")
+		self.add(label, url, index=index, section="others", tile_type="url-tile")
 
 	def add(self, label, uri, index=-1, section="apps", tile_type="file-tile"):
 
