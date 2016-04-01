@@ -127,8 +127,29 @@ class Dock(object):
 				pass
 		target[:] = []
 
-	def move(self, label, index):
-		pass
+	def move(self, label, index, section="apps"):
+		if section == "apps":
+			target = self.apps
+		elif section == "others":
+			target = self.others
+		else:
+			return
+		if label not in self.labels:
+			return
+		if index == -1 or index > len(target):
+			index = len(target)
+		elif index < -1:
+			index = 0
+		for child in target:
+			try:
+				found = info['file-label'] if info.get('file-label') is not None else info['label']
+			except:
+				continue
+			if found == label:
+				to_mv = child
+				break
+		target.remove(to_mv)
+		target.insert(index, to_mv)
 
 	def swap(self, label1, label2):
 		pass
