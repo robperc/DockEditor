@@ -144,7 +144,7 @@ class Dock(object):
 			try:
 				found = info['file-label'] if info.get('file-label') is not None else info['label']
 			except:
-				continue
+				found = None
 			if found == label:
 				to_mv = child
 				break
@@ -161,9 +161,10 @@ class Dock(object):
 		if label1 not in self.labels or label2 not in self.labels or label1 == label2:
 			return
 		for index, child in enumerate(target):
+			info = child["tile-data"]
 			try:
 				found = info['file-label'] if info.get('file-label') is not None else info['label']
-			except:
+			except Exception as e:
 				continue
 			if found == label1:
 				index1 = index
@@ -173,8 +174,6 @@ class Dock(object):
 				child2 = child
 		target[index1] = child2
 		target[index2] = child1
-
-		return file_labels + url_labels
 
 	def write(self):
 		CoreFoundation.CFPreferencesSetAppValue("persistent-apps", self.apps,  self.id)
