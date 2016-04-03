@@ -151,7 +151,7 @@ class Dock(object):
 		target.remove(to_mv)
 		target.insert(index, to_mv)
 
-	def swap(self, label1, label2):
+	def swap(self, label1, label2, section="apps"):
 		if section == "apps":
 			target = self.apps
 		elif section == "others":
