@@ -141,10 +141,11 @@ class Dock(object):
 		elif index < -1:
 			index = 0
 		for child in target:
+			info = child["tile-data"]
 			try:
 				found = info['file-label'] if info.get('file-label') is not None else info['label']
 			except:
-				found = None
+				continue
 			if found == label:
 				to_mv = child
 				break
