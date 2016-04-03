@@ -152,7 +152,29 @@ class Dock(object):
 		target.insert(index, to_mv)
 
 	def swap(self, label1, label2):
-		pass
+		if section == "apps":
+			target = self.apps
+		elif section == "others":
+			target = self.others
+		else:
+			return
+		if label1 not in self.labels or label2 not in self.labels or label1 == label2:
+			return
+		for index, child in enumerate(target):
+			try:
+				found = info['file-label'] if info.get('file-label') is not None else info['label']
+			except:
+				continue
+			if found == label1:
+				index1 = index
+				child1 = child
+			elif found == label2:
+				index2 = index
+				child2 = child
+		target[index1] = child2
+		target[index2] = child1
+
+		return file_labels + url_labels
 
 	def write(self):
 		CoreFoundation.CFPreferencesSetAppValue("persistent-apps", self.apps,  self.id)
