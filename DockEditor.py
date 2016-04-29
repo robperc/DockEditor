@@ -7,9 +7,9 @@ from Foundation import NSMutableArray
 class Dock(object):
 
 	def __init__(self):
-		self.app_dirs = ('/Applications/', 
-			'/Applications/Microsoft Office 2011/', 
-			'/Applications/Utilities/', 
+		self.app_dirs = [os.path.join("/Applications", app_dir) for app_dir in os.listdir('/Applications') if not app_dir.startswith(".") and not app_dir.endswith(".app")]
+		self.app_dirs += (
+			'/Applications',
 			'/System/Library/CoreServices/', 
 			'/System/Library/CoreServices/Applications/'
 		)
@@ -26,14 +26,18 @@ class Dock(object):
 		return file_labels + url_labels
 
 	def addApp(self, label, index=-1, section="apps"):
-		label = label.split(".app")[0]
-		try_paths = [path + label + '.app' for path in self.app_dirs]
-		add_path = [path for path in try_paths if os.path.exists(path)]
+		basename = label
+		if not basename.endswith(".app"):
+			basename += ".app"
+		add_path = ""
+		for app_dir in self.app_dirs:
+			try_path = os.path.join(app_dir, basename)
+			if os.path.exists(try_path):
+				add_path = try_path
+				break
 		if not add_path:
 			print "Can't find app: %s" % (label)
 			return
-		else:
-			add_path = add_path[0]
 		self.add(label, add_path, index=index, section=section)
 
 	def addFile(self, uri, label=None, index=-1, section="apps"):
